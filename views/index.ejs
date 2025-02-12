@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Usuários</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .table-container {
+            width: 100%;
+            max-width: 800px;
+            overflow-x: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background: #292929;
+        }
+        tr:hover {
+            background: #333;
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+        }
+        .btn-ativar {
+            background: #4CAF50;
+        }
+        .btn-desativar {
+            background: #FF5252;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Usuários</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>UID</th>
+                    <th>Status</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        async function loadUsers() {
+            try {
+                const response = await fetch("http://localhost:3000/firebase-users/");
+                if (!response.ok) throw new Error("Erro ao buscar usuários: " + response.status);
+                
+                const users = await response.json();
+                console.log("Usuários carregados:", users);
+
+                const userTable = document.getElementById("userTable");
+                userTable.innerHTML = "";
+                
+                users.forEach(user => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${user.email || "Sem email"}</td>
+                        <td>${user.uid}</td>
+                        <td>${user.disabled ? "Desativado" : "Ativado"}</td>
+                        <td>
+                            <button class="${user.disabled ? "btn-ativar" : "btn-desativar"}" onclick="toggleUser('${user.uid}', ${!user.disabled})">
+                                ${user.disabled ? "Ativar" : "Desativar"}
+                            </button>
+                        </td>
+                    `;
+                    userTable.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Erro no loadUsers:", error);
+            }
+        }
+
+        loadUsers();
+
+        const currentUserUid = "op95kJpDUiQsLw2qULC1EUbsA4t2";
+        console.log("ID do usuário logado:", currentUserUid);
+
+        async function toggleUser(uid, disable) {
+            if (!currentUserUid) {
+                alert("Você precisa estar logado para alterar o status do usuário.");
+                return;
+            }
+            
+            try {
+                const response = await fetch("http://localhost:3000/firebase-users/toggle", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        uid: currentUserUid,
+                        targetUid: uid,
+                        disable: disable
+                    })
+                });
+                if (!response.ok) throw new Error("Erro ao atualizar usuário: " + response.status);
+                
+                const result = await response.json();
+                console.log("Usuário atualizado:", result);
+                
+                loadUsers();
+            } catch (error) {
+                console.error("Erro ao alterar status do usuário:", error);
+            }
+        }
+    </script>
+</body>
+</html>
