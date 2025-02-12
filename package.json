@@ -11,10 +11,12 @@
     "debug": "~2.6.9",
     "dotenv": "^16.4.7",
     "ejs": "~2.6.1",
+    "err": "^2.1.12",
     "express": "~4.16.1",
     "firebase-admin": "^13.1.0",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "throw": "^1.1.1"
   },
   "main": "app.js",
   "keywords": [],
