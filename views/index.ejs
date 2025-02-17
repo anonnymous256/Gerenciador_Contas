@@ -1,151 +1,165 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Usuários</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background-color: #121212;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            padding: 20px;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        .table-container {
-            width: 100%;
-            max-width: 800px;
-            overflow-x: auto;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
-        th {
-            background: #292929;
-        }
-        tr:hover {
-            background: #333;
-        }
-        button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #fff;
-            font-weight: bold;
-        }
-        .btn-ativar {
-            background: #4CAF50;
-        }
-        .btn-desativar {
-            background: #FF5252;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divulgação de Lojas</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Cabeçalho */
+    header {
+      background: linear-gradient(135deg, #0D4376, #0a3357);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    /* Animação de entrada */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Seção de Lojas */
+    .lojas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .loja-card {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .loja-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .loja-card-content {
+      padding: 20px;
+    }
+
+    .loja-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #0D4376;
+    }
+
+    .loja-card p {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .loja-card a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0D4376;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .loja-card a:hover {
+      background-color: #0a3357;
+    }
+  </style>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
+      authDomain: "allenbeauty.firebaseapp.com",
+      projectId: "allenbeauty",
+      storageBucket: "allenbeauty.appspot.com",
+      messagingSenderId: "347722299020",
+      appId: "1:347722299020:web:1e946417d954bebe5d6da9",
+      measurementId: "G-CWM27YKX8C"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ID do roteador
+    const userId = "SqeUi9WyNvZJ3mi9m14cdrQnA5u1"; // Substitua pelo ID do usuário logado
+
+    async function loadClientes() {
+      const lojasContainer = document.querySelector(".lojas");
+      const userDoc = await getDoc(doc(db, "users", userId));
+
+      if (userDoc.exists()) {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        lojasContainer.innerHTML = "";
+        querySnapshot.forEach(doc => {
+          const cliente = doc.data();
+          const lojaCard = document.createElement("div");
+          lojaCard.classList.add("loja-card");
+          lojaCard.innerHTML = `
+            <div class="loja-card-content">
+              <h3>${cliente.name || "Nome não informado"}</h3>
+              <a href="/agendamento?id=${doc.id}&nome=${cliente.name || "Nome não informado"}">Agendar</a>
+            </div>
+          `;
+          lojasContainer.appendChild(lojaCard);
+        });
+      } else {
+        lojasContainer.innerHTML = "<p>Você não tem permissão para visualizar esta página.</p>";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadClientes);
+  </script>
 </head>
 <body>
-    <h1>Lista de Usuários</h1>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>UID</th>
-                    <th>Status</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody id="userTable"></tbody>
-        </table>
-    </div>
+  <header>
+    <h1>Allen Beauty</h1>
+    <p>Explore nossos clientes cadastrados e agende um horário!</p>
+  </header>
 
-    <script>
-        async function loadUsers() {
-            try {
-                const response = await fetch("http://localhost:3000/firebase-users/");
-                if (!response.ok) throw new Error("Erro ao buscar usuários: " + response.status);
-                
-                const users = await response.json();
-                console.log("Usuários carregados:", users);
+  <section class="lojas"></section>
 
-                const userTable = document.getElementById("userTable");
-                userTable.innerHTML = "";
-                
-                users.forEach(user => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${user.email || "Sem email"}</td>
-                        <td>${user.uid}</td>
-                        <td>${user.disabled ? "Desativado" : "Ativado"}</td>
-                        <td>
-                            <button class="${user.disabled ? "btn-ativar" : "btn-desativar"}" onclick="toggleUser('${user.uid}', ${!user.disabled})">
-                                ${user.disabled ? "Ativar" : "Desativar"}
-                            </button>
-                        </td>
-                    `;
-                    userTable.appendChild(row);
-                });
-
-            } catch (error) {
-                console.error("Erro no loadUsers:", error);
-            }
-        }
-
-        loadUsers();
-
-        const currentUserUid = "op95kJpDUiQsLw2qULC1EUbsA4t2";
-        console.log("ID do usuário logado:", currentUserUid);
-
-        async function toggleUser(uid, disable) {
-            if (!currentUserUid) {
-                alert("Você precisa estar logado para alterar o status do usuário.");
-                return;
-            }
-            
-            try {
-                const response = await fetch("http://localhost:3000/firebase-users/toggle", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        uid: currentUserUid,
-                        targetUid: uid,
-                        disable: disable
-                    })
-                });
-                if (!response.ok) throw new Error("Erro ao atualizar usuário: " + response.status);
-                
-                const result = await response.json();
-                console.log("Usuário atualizado:", result);
-                
-                loadUsers();
-            } catch (error) {
-                console.error("Erro ao alterar status do usuário:", error);
-            }
-        }
-    </script>
 </body>
 </html>
