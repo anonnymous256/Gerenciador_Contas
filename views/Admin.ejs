@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Usuários</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #0D4376;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0D4376;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f8f9fa;
+    }
+    .hidden {
+      display: none;
+    }
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Tela de Login -->
+    <div id="login-screen">
+      <h1>Login</h1>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Email" required autocomplete="username">
+        <input type="password" id="password" placeholder="Senha" required autocomplete="current-password">
+        <button type="submit">Entrar</button>
+        <div id="error-message" class="error-message hidden"></div>
+      </form>
+    </div>
+
+    <!-- Tela de Gerenciamento -->
+    <div id="management-screen" class="hidden">
+      <h1>Gerenciamento de Usuários</h1>
+      <table id="users-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Linhas serão preenchidas dinamicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Firebase e App Script -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
+      authDomain: "allenbeauty.firebaseapp.com",
+      projectId: "allenbeauty",
+      storageBucket: "allenbeauty.appspot.com",
+      messagingSenderId: "347722299020",
+      appId: "1:347722299020:web:1e946417d954bebe5d6da9",
+      measurementId: "G-CWM27YKX8C"
+    };
+
+    // Inicializar Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Referências aos elementos do DOM
+    const loginScreen = document.getElementById('login-screen');
+    const managementScreen = document.getElementById('management-screen');
+    const loginForm = document.getElementById('login-form');
+    const usersTableBody = document.querySelector('#users-table tbody');
+    const errorMessage = document.getElementById('error-message');
+
+    // Função para carregar usuários
+    const loadUsers = async () => {
+      const usersSnapshot = await db.collection('users').get();
+      usersTableBody.innerHTML = ''; // Limpar tabela
+      usersSnapshot.forEach(doc => {
+        const user = doc.data();
+        const row = `
+          <tr>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.status}</td>
+            <td>
+              <select onchange="updateStatus('${doc.id}', this.value)">
+                <option value="ativado" ${user.status === 'ativado' ? 'selected' : ''}>Ativado</option>
+                <option value="desativado" ${user.status === 'desativado' ? 'selected' : ''}>Desativado</option>
+              </select>
+            </td>
+          </tr>
+        `;
+        usersTableBody.innerHTML += row;
+      });
+    };
+
+    // Função para atualizar o status do usuário
+    window.updateStatus = async (userId, status) => {
+      await db.collection('users').doc(userId).update({ status });
+      alert('Status atualizado com sucesso!');
+      loadUsers(); // Recarregar a lista de usuários
+    };
+
+    // Função para verificar o tipo de usuário
+    const checkUserType = async (email) => {
+      const usersSnapshot = await db.collection('users').where('email', '==', email).get();
+      if (usersSnapshot.empty) {
+        throw new Error('Usuário não encontrado');
+      }
+      const user = usersSnapshot.docs[0].data();
+      return user.tipo_user.trim().toLowerCase(); // Remove espaços e converte para minúsculas
+    };
+
+    // Simular login (sem autenticação real)
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        // Verificar o tipo de usuário
+        const userType = await checkUserType(email);
+
+        if (userType === 'admin') {
+          // Se o tipo de usuário for "admin", redirecionar para a tela de gerenciamento
+          loginScreen.classList.add('hidden');
+          managementScreen.classList.remove('hidden');
+          loadUsers(); // Carregar usuários ao entrar
+        } else {
+          // Se o tipo de usuário não for "admin", exibir mensagem de erro
+          errorMessage.textContent = 'Apenas administradores podem fazer login.';
+          errorMessage.classList.remove('hidden');
+        }
+      } catch (error) {
+        // Tratar erros (por exemplo, usuário não encontrado)
+        errorMessage.textContent = error.message;
+        errorMessage.classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

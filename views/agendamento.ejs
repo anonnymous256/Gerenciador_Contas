@@ -208,20 +208,21 @@ input:focus {
 
     // Recupera os serviços da loja
     async function carregarServicos() {
-      const servicosRef = collection(db, "Servicos");
-      const querySnapshot = await getDocs(servicosRef);
-      const servicosSelect = document.getElementById("servicos");
+  const servicosRef = collection(db, "Servicos");
+  const querySnapshot = await getDocs(servicosRef);
+  const servicosSelect = document.getElementById("servicos");
 
-      querySnapshot.forEach(doc => {
-        const servico = doc.data();
-        if (servico.usuarioId === idLoja) {
-          const option = document.createElement("option");
-          option.value = doc.id;
-          option.textContent = servico.nome;
-          servicosSelect.appendChild(option);
-        }
-      });
+  querySnapshot.forEach(doc => {
+    const servico = doc.data();
+    if (servico.usuarioId === idLoja && servico.tipo === "Serviço") {
+      const option = document.createElement("option");
+      option.value = doc.id;
+      option.textContent = servico.nome;
+      servicosSelect.appendChild(option);
     }
+  });
+}
+
 
     // Exibe os horários disponíveis
     function exibirHorarios(horarios) {
@@ -268,6 +269,7 @@ input:focus {
         where("idLoja", "==", idLoja),
         where("servico", "==", servicoId),
         where("dia", "==", dia),
+        where("status", "==", "pendente"),
         where("horario", "==", horario)
       );
       const querySnapshot = await getDocs(q);

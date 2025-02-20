@@ -10,4 +10,8 @@ router.get('/agendamento', function(req, res, next) {
   res.render('agendamento', { title: 'Agendamento' });
 });
 
+router.get('/adm', function(req, res, next) {
+  res.render('Admin', { title: 'Agendamento' });
+});
+
 module.exports = router;
