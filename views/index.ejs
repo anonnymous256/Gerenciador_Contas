@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Divulgação de Lojas</title>
+  <title>Allen Beauty - Agendamentos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
@@ -14,82 +14,84 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f9fafb;
+      background-color: #f4f4f9;
       color: #333;
-      line-height: 1.6;
     }
 
-    /* Cabeçalho */
     header {
       background: linear-gradient(135deg, #0D4376, #0a3357);
       color: #fff;
-      padding: 60px 20px;
       text-align: center;
+      padding: 50px 20px;
     }
 
     header h1 {
       font-size: 3rem;
-      margin-bottom: 10px;
       font-weight: 700;
-      animation: fadeIn 1.5s ease-in-out;
+      margin-bottom: 10px;
     }
 
     header p {
       font-size: 1.2rem;
-      animation: fadeIn 2s ease-in-out;
     }
 
-    /* Animação de entrada */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    nav ul {
+      list-style: none;
+      margin-top: 10px;
     }
 
-    /* Seção de Lojas */
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #FFD700;
+    }
+
     .lojas {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
       padding: 40px 20px;
-      gap: 30px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
     }
 
     .loja-card {
-      background-color: #fff;
+      background: #fff;
       border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+      padding: 20px;
     }
 
     .loja-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .loja-card-content {
-      padding: 20px;
+    .loja-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
     }
 
     .loja-card h3 {
       font-size: 1.5rem;
-      margin-bottom: 10px;
       color: #0D4376;
-    }
-
-    .loja-card p {
-      font-size: 1rem;
-      color: #666;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .loja-card a {
@@ -99,16 +101,30 @@
       color: #fff;
       text-decoration: none;
       border-radius: 5px;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s;
     }
 
     .loja-card a:hover {
       background-color: #0a3357;
     }
   </style>
+</head>
+<body>
+  <header>
+    <h1>Allen Beauty</h1>
+    <p>Encontre o salão perfeito e agende seu horário!</p>
+    <nav>
+      <ul>
+        <li><a href="/adm">Gerenciamento</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="lojas"></section>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
@@ -123,48 +139,25 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ID do roteador
-    const userId = "SqeUi9WyNvZJ3mi9m14cdrQnA5u1"; // Substitua pelo ID do usuário logado
-
     async function loadClientes() {
       const lojasContainer = document.querySelector(".lojas");
-      const userDoc = await getDoc(doc(db, "users", userId));
-
-      if (userDoc.exists()) {
-        const querySnapshot = await getDocs(collection(db, "users"));
-        lojasContainer.innerHTML = "";
-        querySnapshot.forEach(doc => {
-          const cliente = doc.data();
-          const lojaCard = document.createElement("div");
-          lojaCard.classList.add("loja-card");
-          lojaCard.innerHTML = `
-            <div class="loja-card-content">
-              <h3>${cliente.name || "Nome não informado"}</h3>
-              <a href="/agendamento?id=${doc.id}&nome=${cliente.name || "Nome não informado"}">Agendar</a>
-            </div>
-          `;
-          lojasContainer.appendChild(lojaCard);
-        });
-      } else {
-        lojasContainer.innerHTML = "<p>Você não tem permissão para visualizar esta página.</p>";
-      }
+      const querySnapshot = await getDocs(collection(db, "users"));
+      lojasContainer.innerHTML = "";
+      querySnapshot.forEach(doc => {
+        const cliente = doc.data();
+        const imgSrc = cliente.imagem ? `data:image/png;base64,${cliente.imagem}` : 'https://via.placeholder.com/100';
+        const lojaCard = document.createElement("div");
+        lojaCard.classList.add("loja-card");
+        lojaCard.innerHTML = `
+          <img src="${imgSrc}" alt="${cliente.name}">
+          <h3>${cliente.name || "Nome não informado"}</h3>
+          <a href="/agendamento?id=${doc.id}&nome=${cliente.name || "Nome não informado"}">Agendar</a>
+        `;
+        lojasContainer.appendChild(lojaCard);
+      });
     }
 
     document.addEventListener("DOMContentLoaded", loadClientes);
   </script>
-</head>
-<body>
-  <header>
-    <h1>Allen Beauty</h1>
-    <p>Explore nossos clientes cadastrados e agende um horário!</p>
-    <nav>
-      <ul>
-        <li><a href="/adm">Gerenciamento</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <section class="lojas"></section>
-
 </body>
 </html>

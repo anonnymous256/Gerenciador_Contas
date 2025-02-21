@@ -7,6 +7,7 @@
   <title>Agendamento Profissional</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -34,6 +35,7 @@
       font-size: 2rem;
       color: #0D4376;
       margin-bottom: 20px;
+      font-weight: 600;
     }
 
     .agendamento-container p {
@@ -51,25 +53,36 @@
     }
 
     select,
-    .flatpickr-input {
+    .flatpickr-input,
+    input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       font-size: 1rem;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 8px;
       margin-top: 10px;
+      outline: none;
+      transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    select:focus,
+    .flatpickr-input:focus,
+    input:focus {
+      border-color: #0D4376;
+      box-shadow: 0 0 5px rgba(13, 67, 118, 0.5);
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 12px 20px;
       background-color: #0D4376;
       color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
       margin-top: 20px;
       font-size: 1rem;
       width: 100%;
+      transition: background-color 0.3s ease-in-out;
     }
 
     .btn:hover {
@@ -86,21 +99,25 @@
 
     .horarios-container {
       margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .horarios-container h3 {
       font-size: 1.2rem;
       color: #0D4376;
       margin-bottom: 10px;
+      width: 100%;
     }
 
     .horarios-container button {
-      padding: 10px;
-      margin: 5px;
+      padding: 10px 15px;
       background-color: #f0f0f0;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     }
 
     .horarios-container button:hover {
@@ -113,21 +130,22 @@
       border-color: #0D4376;
     }
 
-    input {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-top: 10px;
-      display: block;
-      outline: none;
-      transition: border-color 0.3s ease-in-out;
+    .confirmation-details {
+      text-align: left;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
     }
 
-    input:focus {
-      border-color: #0D4376;
-      box-shadow: 0 0 5px rgba(13, 67, 118, 0.5);
+    .confirmation-details p {
+      margin: 10px 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .confirmation-details strong {
+      color: #0D4376;
     }
   </style>
 </head>
@@ -136,8 +154,6 @@
   <div class="agendamento-container">
     <h2>Agendamento para: <span id="nomeLoja"></span></h2>
     <p><span id="idLoja"></span></p>
-
-    <!-- Passo 1: Seleção de Serviço -->
     <div class="step active" id="step1">
       <h3>Selecione um Serviço</h3>
       <select id="servicos">
@@ -152,406 +168,435 @@
       <input type="text" id="dataAgendamento" placeholder="Selecione a data" required>
       <h3>Selecione um Horário</h3>
       <div class="horarios-container" id="horariosContainer">
-        <!-- Horários serão exibidos aqui dinamicamente -->
       </div>
-      <button class="btn btn-secondary" id="btnBackStep2">Voltar</button>
       <button class="btn" id="btnNextStep2">Próximo</button>
+      <button class="btn btn-secondary" id="btnBackStep2">Voltar</button>
     </div>
 
-    <!-- Passo 3: Informações do Cliente -->
+    <!-- Passo 3: Verificação do CPF -->
     <div class="step" id="step3">
+      <h3>Verificação do CPF</h3>
+      <input type="text" id="cpfCliente" placeholder="CPF do Cliente" required>
+      <button class="btn" id="btnVerificarCPF">Verificar</button>
+      <button class="btn btn-secondary" id="btnBackStep3">Voltar</button>
+    </div>
+
+    <!-- Passo 4: Informações do Cliente (se CPF não existir) -->
+    <div class="step" id="step4">
       <h3>Informações do Cliente</h3>
       <input type="text" id="nomeCliente" placeholder="Seu Nome" required>
-      <input type="text" id="cpfCliente" placeholder="CPF do Cliente" required>
       <input type="text" id="telefoneCliente" placeholder="Telefone do Cliente" required>
-      <button class="btn btn-secondary" id="btnBackStep3">Voltar</button>
-      <button class="btn" id="btnNextStep3">Próximo</button>
-    </div>
-
-    <!-- Passo 4: Confirmação do Agendamento -->
-    <div class="step" id="step4">
-      <h3>Confirme seu Agendamento</h3>
-      <p><strong>Serviço:</strong> <span id="confirmServico"></span></p>
-      <p><strong>Horário:</strong> <span id="confirmHorario"></span></p>
-      <p><strong>Cliente:</strong> <span id="confirmCliente"></span></p>
-      <p><strong>CPF:</strong> <span id="confirmCPF"></span></p>
-      <p><strong>Telefone:</strong> <span id="confirmTelefone"></span></p>
+      <button class="btn" id="btnNextStep4">Próximo</button>
       <button class="btn btn-secondary" id="btnBackStep4">Voltar</button>
-      <button class="btn" id="btnConfirmarAgendamento">Confirmar</button>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, getDoc, doc, addDoc, setDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    <!-- Passo 5: Confirmação do Agendamento -->
+    <div class="step" id="step5">
+      <h3>Confirme seu Agendamento</h3>
+      <div class="confirmation-details">
+        <p><strong>Serviço:</strong> <span id="confirmServico"></span></p>
+        <p><strong>Horário:</strong> <span id="confirmHorario"></span></p>
+        <p><strong>Cliente:</strong> <span id="confirmCliente"></span></p>
+        <p><strong>CPF:</strong> <span id="confirmCPF"></span></p>
+        <p><strong>Telefone:</strong> <span id="confirmTelefone"></span></p>
+      </div>
+      <button class="btn" id="btnConfirmarAgendamento">Confirmar</button>
+      <button class="btn btn-secondary" id="btnBackStep5">Voltar</button>
+    </div>
 
-    // Configuração do Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
-      authDomain: "allenbeauty.firebaseapp.com",
-      projectId: "allenbeauty",
-      storageBucket: "allenbeauty.appspot.com",
-      messagingSenderId: "347722299020",
-      appId: "1:347722299020:web:1e946417d954bebe5d6da9",
-      measurementId: "G-CWM27YKX8C"
-    };
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getFirestore, collection, getDocs, getDoc, doc, addDoc, setDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+      const firebaseConfig = {
+        apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
+        authDomain: "allenbeauty.firebaseapp.com",
+        projectId: "allenbeauty",
+        storageBucket: "allenbeauty.appspot.com",
+        messagingSenderId: "347722299020",
+        appId: "1:347722299020:web:1e946417d954bebe5d6da9",
+        measurementId: "G-CWM27YKX8C"
+      };
 
-    // Captura os parâmetros da URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const idLoja = urlParams.get('id');
-    const nomeLoja = urlParams.get('nome');
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
 
-    // Exibe o nome e o ID da loja na página
-    document.getElementById('nomeLoja').textContent = nomeLoja || "Nome não informado";
+      const urlParams = new URLSearchParams(window.location.search);
+      const idLoja = urlParams.get('id');
+      const nomeLoja = urlParams.get('nome');
 
+      document.getElementById('nomeLoja').textContent = nomeLoja || "Nome não informado";
 
-    // ID do simulador
-    const userId = "SqeUi9WyNvZJ3mi9m14cdrQnA5u1"; // Substitua pelo ID do usuário logado
+      const userId = "SqeUi9WyNvZJ3mi9m14cdrQnA5u1";
 
-    // Variáveis globais
-    let servicoSelecionado = null;
-    let horarioSelecionado = null;
-    let clienteInfo = { nome: '', cpf: '', telefone: '' };
-    let dataSelecionada = null;
+      let servicoSelecionado = null;
+      let horarioSelecionado = null;
+      let clienteInfo = { nome: '', cpf: '', telefone: '' };
+      let dataSelecionada = null;
 
-    // Função para mudar de passo
-    function changeStep(currentStep, nextStep) {
-      document.getElementById(currentStep).classList.remove('active');
-      document.getElementById(nextStep).classList.add('active');
-    }
-
-    // Inicializa o flatpickr para seleção de data
-    flatpickr("#dataAgendamento", {
-      dateFormat: "d/m/Y",
-      minDate: "today",
-      locale: "pt",
-      onChange: function (selectedDates) {
-        if (selectedDates.length === 0) return;
-
-        const dataSelecionada = selectedDates[0];
-
-        const diasSemana = [
-          "Domingo",
-          "Segunda-feira",
-          "Terça-feira",
-          "Quarta-feira",
-          "Quinta-feira",
-          "Sexta-feira",
-          "Sábado"
-        ];
-
-        const diaSemanaSelecionado = diasSemana[dataSelecionada.getDay()];
-
-
-        // Atualiza os horários baseados no dia da semana selecionado
-        filtrarHorariosPorDia(diaSemanaSelecionado);
+      // Função para mudar de passo
+      function changeStep(currentStep, nextStep) {
+        document.getElementById(currentStep).classList.remove('active');
+        document.getElementById(nextStep).classList.add('active');
       }
-    });
 
-    // Recupera os serviços da loja
-    async function carregarServicos() {
-      const servicosRef = collection(db, "Servicos");
-      const querySnapshot = await getDocs(servicosRef);
-      const servicosSelect = document.getElementById("servicos");
-
-      querySnapshot.forEach(doc => {
-        const servico = doc.data();
-        if (servico.usuarioId === idLoja && servico.tipo === "Serviço") {
-          const option = document.createElement("option");
-          option.value = doc.id;
-          option.textContent = servico.nome;
-          servicosSelect.appendChild(option);
-        }
+      // Máscara para CPF
+      document.getElementById("cpfCliente").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+        e.target.value = value;
       });
-    }
 
+      // Máscara para telefone
+      document.getElementById("telefoneCliente").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        value = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+        e.target.value = value;
+      });
 
-    // Exibe os horários disponíveis
-    function filtrarHorariosPorDia(diaSelecionado) {
-      const horariosContainer = document.getElementById("horariosContainer");
-      horariosContainer.innerHTML = "<h3>Horários Disponíveis</h3>";
+      flatpickr("#dataAgendamento", {
+  dateFormat: "d/m/Y",
+  minDate: "today",
+  locale: "pt",
+  onChange: async function (selectedDates) {
+    if (selectedDates.length === 0) return;
 
-      if (!servicoSelecionado) return;
+    // Atualiza a data selecionada
+    dataSelecionada = selectedDates[0];
 
-      const servicoDoc = querySnapshot.docs.find(doc => doc.id === servicoSelecionado.id);
+    const diasSemana = [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado"
+    ];
 
-      if (servicoDoc) {
-        const horarios = servicoDoc.data().horarios;
+    const diaSemanaSelecionado = diasSemana[dataSelecionada.getDay()];
 
-        if (horarios[diaSelecionado] && horarios[diaSelecionado].length > 0) {
-          horarios[diaSelecionado].forEach(horario => {
-            const botaoHorario = document.createElement("button");
-            botaoHorario.textContent = horario;
-            botaoHorario.addEventListener("click", () => {
-              const selected = document.querySelector('.horarios-container button.selected');
-              if (selected) selected.classList.remove('selected');
-              botaoHorario.classList.add('selected');
-              horarioSelecionado = { dia: diaSelecionado, horario };
-            });
-            horariosContainer.appendChild(botaoHorario);
-          });
-        } else {
-          horariosContainer.innerHTML += "<p>Nenhum horário disponível para este dia.</p>";
-        }
+    // Chama a função para filtrar os horários
+    await filtrarHorariosPorDia(diaSemanaSelecionado);
+  }
+});
+
+      async function carregarServicos() {
+        const servicosRef = collection(db, "Servicos");
+        const querySnapshot = await getDocs(servicosRef);
+        const servicosSelect = document.getElementById("servicos");
+
+        querySnapshot.forEach(doc => {
+          const servico = doc.data();
+          if (servico.usuarioId === idLoja && servico.tipo === "Serviço") {
+            const option = document.createElement("option");
+            option.value = doc.id;
+            option.textContent = servico.nome;
+            servicosSelect.appendChild(option);
+          }
+        });
       }
-    }
 
+      async function filtrarHorariosPorDia(diaSelecionado) {
+  const horariosContainer = document.getElementById("horariosContainer");
+  horariosContainer.innerHTML = "<h3>Horários Disponíveis</h3>";
 
-    // Verifica a disponibilidade de funcionários
-    async function verificarDisponibilidade(servicoId, data, horario) {
-  const servicoDoc = await getDoc(doc(db, "Servicos", servicoId));
-  if (!servicoDoc.exists()) {
-    throw new Error("Serviço não encontrado.");
+  if (!servicoSelecionado) {
+    console.error("Nenhum serviço selecionado.");
+    return;
   }
 
-  const servico = servicoDoc.data();
-  const numFuncionarios = servico.funcionarios.length;
+  // Busca os horários do serviço selecionado
+  const servicoDoc = querySnapshot.docs.find(doc => doc.id === servicoSelecionado.id);
+  if (!servicoDoc) {
+    console.error("Serviço não encontrado.");
+    return;
+  }
 
-  // Conta quantos agendamentos já existem para o mesmo serviço, dia e horário
-  const agendamentosRef = collection(db, "agendamentos");
-  const q = query(
-    agendamentosRef,
-    where("idLoja", "==", idLoja),
-    where("servico", "==", servicoId),
-    where("dataSelecionada", "==", data),
-    where("status", "==", "pendente"),
-    where("horario", "==", horario)
-  );
-  const querySnapshot = await getDocs(q);
-  const numAgendamentos = querySnapshot.size;
+  const horarios = servicoDoc.data().horarios;
+  if (!horarios[diaSelecionado] || horarios[diaSelecionado].length === 0) {
+    horariosContainer.innerHTML += "<p>Nenhum horário disponível para este dia.</p>";
+    return;
+  }
 
-  // Verifica se o serviço tem mais de um funcionário
-  if (numFuncionarios > 1) {
-    // Se o serviço tiver mais de um funcionário, permite o agendamento
-    // desde que o número de agendamentos não exceda o número de funcionários
-    return numAgendamentos < numFuncionarios;
-  } else {
-    // Se o serviço tiver apenas um funcionário, permite apenas um agendamento por horário
-    return numAgendamentos === 0;
+  // Itera sobre os horários e verifica a disponibilidade
+  for (const horario of horarios[diaSelecionado]) {
+    const botaoHorario = document.createElement("button");
+    botaoHorario.textContent = horario;
+
+    try {
+      // Verifica a disponibilidade do horário
+      const disponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horario);
+
+      if (!disponivel) {
+        botaoHorario.disabled = true;
+        botaoHorario.style.backgroundColor = "#ccc";
+        botaoHorario.style.cursor = "not-allowed";
+        botaoHorario.textContent += " (Indisponível)";
+      } else {
+        botaoHorario.addEventListener("click", () => {
+          document.querySelectorAll('.horarios-container button').forEach(btn => btn.classList.remove('selected'));
+          botaoHorario.classList.add('selected');
+          horarioSelecionado = { dia: diaSelecionado, horario };
+        });
+      }
+    } catch (erro) {
+      console.error(`Erro ao verificar disponibilidade para ${horario}:`, erro);
+      botaoHorario.disabled = true;
+      botaoHorario.textContent += " (Erro)";
+    }
+
+    horariosContainer.appendChild(botaoHorario);
   }
 }
 
-    // Função para verificar se o CPF já existe no banco de dados e retornar o ID do cliente existente
-    async function verificarCPFExistente(cpf, idLoja) {
-      const clientesRef = collection(db, "clientes");
-      const q = query(clientesRef, where("cpf", "==", cpf), where("idUser", "==", idLoja)); // Filtra por CPF e idUser (idLoja)
-      const querySnapshot = await getDocs(q);
+      async function verificarDisponibilidade(servicoId, data, horario) {
+        const servicoDoc = await getDoc(doc(db, "Servicos", servicoId));
+        if (!servicoDoc.exists()) {
+          throw new Error("Serviço não encontrado.");
+        }
 
-      if (!querySnapshot.empty) {
-        // Retorna o ID do primeiro cliente encontrado com o CPF e idUser correspondente
-        return querySnapshot.docs[0].id;
+        const servico = servicoDoc.data();
+        const numFuncionarios = servico.funcionarios.length;
+
+        const agendamentosRef = collection(db, "agendamentos");
+        const q = query(
+          agendamentosRef,
+          where("idLoja", "==", idLoja),
+          where("servico", "==", servicoId),
+          where("dataSelecionada", "==", data),
+          where("status", "==", "pendente"),
+          where("horario", "==", horario)
+        );
+        const querySnapshot = await getDocs(q);
+        const numAgendamentos = querySnapshot.size;
+        if (numFuncionarios > 1) {
+          return numAgendamentos < numFuncionarios;
+        } else {
+          return numAgendamentos === 0;
+        }
       }
-      return null; // Retorna null se o CPF não existir para essa loja
-    }
 
+      async function verificarCPFExistente(cpf, idLoja) {
+        const clientesRef = collection(db, "clientes");
+        const q = query(clientesRef, where("cpf", "==", cpf), where("idUser", "==", idLoja));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const cliente = querySnapshot.docs[0].data();
+          return {
+            id: querySnapshot.docs[0].id,
+            nome: cliente.nome,
+            telefone: cliente.telefone
+          };
+        }
+        return null;
+      }
+      async function salvarCliente() {
+        const cpf = clienteInfo.cpf;
+        const clienteExistenteId = await verificarCPFExistente(cpf, idLoja);
+        if (clienteExistenteId) {
+          return clienteExistenteId;
+        }
+        const clienteRef = collection(db, "clientes");
+        const docRef = doc(clienteRef);
+        const idDoc = docRef.id;
 
-    // Salva o cliente na coleção "clientes"
-    // Função para salvar o cliente ou exibir mensagem de boas-vindas
-    async function salvarCliente() {
-      const cpf = clienteInfo.cpf;
-
-      // Verifica se o CPF já existe
-      const clienteExistenteId = await verificarCPFExistente(cpf, idLoja);
-      if (clienteExistenteId) {
-        return clienteExistenteId; // Retorna o ID do cliente existente
+        const clienteData = {
+          cpf: cpf,
+          dataCadastro: serverTimestamp(),
+          idDoc: idDoc,
+          idUser: idLoja,
+          imagem: null,
+          nome: clienteInfo.nome,
+          status: "ativo",
+          telefone: clienteInfo.telefone
+        };
+        await setDoc(docRef, clienteData);
+        return idDoc;
       }
 
-      // Cria um novo cliente
-      const clienteRef = collection(db, "clientes");
-      const docRef = doc(clienteRef); // Cria uma referência com ID gerado automaticamente
-      const idDoc = docRef.id; // Obtém o ID do documento
+      async function salvarAgendamento() {
+        try {
+          const disponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horarioSelecionado.horario);
+          if (!disponivel) {
+            Swal.fire({
+              title: 'Indisponível',
+              text: 'Não há funcionários disponíveis para este horário.',
+              icon: 'warning',
+              confirmButtonText: 'OK'
+            });
+            return;
+          }
+          await addDoc(collection(db, "agendamentos"), {
+            idLoja: idLoja,
+            idUsuario: userId,
+            idCliente: clienteInfo.id,
+            servico: servicoSelecionado.id,
+            dataSelecionada: dataSelecionada,
+            horario: horarioSelecionado.horario,
+            imagem: null,
+            status: "pendente"
+          });
 
-      const clienteData = {
-        cpf: cpf,
-        dataCadastro: serverTimestamp(), // Usa o timestamp do servidor
-        idDoc: idDoc, // ID do documento
-        idUser: idLoja, // ID do usuário logado
-        imagem: null, // Campo de imagem inicialmente nulo
-        nome: clienteInfo.nome,
-        status: "ativo", // Status padrão
-        telefone: clienteInfo.telefone
-      };
-
-      // Salva o documento com o ID já incluído
-      await setDoc(docRef, clienteData);
-
-      return idDoc; // Retorna o ID do cliente salvo
-    }
-
-    // Função para salvar o agendamento no Firestore
-    async function salvarAgendamento() {
-      try {
-        // Verifica a disponibilidade de funcionários
-        const disponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horarioSelecionado.horario);
-        if (!disponivel) {
           Swal.fire({
-            title: 'Indisponível',
-            text: 'Não há funcionários disponíveis para este horário.',
-            icon: 'warning',
+            title: 'Sucesso',
+            text: 'Agendamento salvo com sucesso!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.reload();
+          });
+        } catch (error) {
+          console.error("Erro ao salvar agendamento:", error);
+          Swal.fire({
+            title: 'Erro',
+            text: 'Erro ao salvar agendamento. Tente novamente.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+
+      document.getElementById("btnNextStep1").addEventListener("click", () => {
+        const servicoId = document.getElementById("servicos").value;
+        if (!servicoId) {
+          Swal.fire({
+            title: 'Erro',
+            text: 'Selecione um serviço para continuar.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+        servicoSelecionado = {
+          id: servicoId,
+          nome: document.getElementById("servicos").selectedOptions[0].text
+        };
+
+        changeStep('step1', 'step2');
+      });
+
+      document.getElementById("btnBackStep2").addEventListener("click", () => {
+        changeStep('step2', 'step1');
+      });
+
+      document.getElementById("btnNextStep2").addEventListener("click", () => {
+        dataSelecionada = document.getElementById("dataAgendamento").value;
+
+        if (!dataSelecionada) {
+          Swal.fire({
+            title: 'Erro',
+            text: 'Selecione uma data para continuar.',
+            icon: 'error',
             confirmButtonText: 'OK'
           });
           return;
         }
 
-        // Salva o agendamento
-        await addDoc(collection(db, "agendamentos"), {
-          idLoja: idLoja,
-          idUsuario: userId,
-          idCliente: clienteInfo.id,
-          servico: servicoSelecionado.id,
-          dataSelecionada: dataSelecionada,
-          horario: horarioSelecionado.horario,
-          imagem: null,
-          status: "pendente"
-        });
+        if (!horarioSelecionado) {
+          Swal.fire({
+            title: 'Erro',
+            text: 'Selecione um horário para continuar.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
 
-        Swal.fire({
-          title: 'Sucesso',
-          text: 'Agendamento salvo com sucesso!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        }).then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.error("Erro ao salvar agendamento:", error);
-        Swal.fire({
-          title: 'Erro',
-          text: 'Erro ao salvar agendamento. Tente novamente.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-      }
-    }
-
-    // Eventos de navegação entre passos
-    document.getElementById("btnNextStep1").addEventListener("click", () => {
-      const servicoId = document.getElementById("servicos").value;
-      if (!servicoId) {
-        Swal.fire({
-          title: 'Erro',
-          text: 'Selecione um serviço para continuar.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
-
-      // Define o serviço selecionado
-      servicoSelecionado = {
-        id: servicoId,
-        nome: document.getElementById("servicos").selectedOptions[0].text
-      };
-
-      // Obtém os horários do serviço e aguarda a seleção de uma data
-      Swal.fire({
-        title: 'Atenção',
-        text: 'Selecione uma data primeiro para visualizar os horários disponíveis.',
-        icon: 'info',
-        confirmButtonText: 'OK'
+        changeStep('step2', 'step3');
       });
 
-      changeStep('step1', 'step2');
-    });
+      document.getElementById("btnVerificarCPF").addEventListener("click", async () => {
+        const cpf = document.getElementById("cpfCliente").value.replace(/\D/g, '');
+        if (!cpf || cpf.length !== 11) {
+          Swal.fire({
+            title: 'Erro',
+            text: 'Por favor, insira um CPF válido.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
 
+        const clienteExistente = await verificarCPFExistente(cpf, idLoja);
+        if (clienteExistente) {
+          await Swal.fire({
+            title: 'Bem-vindo de volta!',
+            text: 'Você já é um cliente cadastrado.',
+            icon: 'info',
+            confirmButtonText: 'OK'
+          });
 
-    document.getElementById("btnBackStep2").addEventListener("click", () => {
-      changeStep('step2', 'step1');
-    });
+          clienteInfo = {
+            id: clienteExistente.id,
+            cpf: cpf,
+            nome: clienteExistente.nome,
+            telefone: clienteExistente.telefone
+          };
 
-    document.getElementById("btnNextStep2").addEventListener("click", () => {
-      dataSelecionada = document.getElementById("dataAgendamento").value;
+          document.getElementById("confirmServico").textContent = servicoSelecionado.nome;
+          document.getElementById("confirmHorario").textContent = `${dataSelecionada} às ${horarioSelecionado.horario}`;
+          document.getElementById("confirmCliente").textContent = clienteInfo.nome;
+          document.getElementById("confirmCPF").textContent = clienteInfo.cpf;
+          document.getElementById("confirmTelefone").textContent = clienteInfo.telefone;
 
-      if (!dataSelecionada) {
-        Swal.fire({
-          title: 'Erro',
-          text: 'Selecione uma data para continuar.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
+          changeStep('step3', 'step5');
+        } else {
+          clienteInfo.cpf = cpf;
+          changeStep('step3', 'step4');
+        }
+      });
 
-      if (!horarioSelecionado) {
-        Swal.fire({
-          title: 'Erro',
-          text: 'Selecione um horário para continuar.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
+      document.getElementById("btnNextStep4").addEventListener("click", async () => {
+        const nome = document.getElementById("nomeCliente").value;
+        const telefone = document.getElementById("telefoneCliente").value.replace(/\D/g, '');
 
-      changeStep('step2', 'step3');
-    });
+        if (!nome || !telefone) {
+          Swal.fire({
+            title: 'Erro',
+            text: 'Preencha todos os campos do cliente.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+        clienteInfo = { ...clienteInfo, nome, telefone };
+        const clienteId = await salvarCliente();
+        clienteInfo.id = clienteId;
 
-    document.getElementById("btnBackStep3").addEventListener("click", () => {
-      changeStep('step3', 'step2');
-    });
+        // Preenche os dados de confirmação
+        document.getElementById("confirmServico").textContent = servicoSelecionado.nome;
+        document.getElementById("confirmHorario").textContent = `${dataSelecionada} às ${horarioSelecionado.horario}`;
+        document.getElementById("confirmCliente").textContent = clienteInfo.nome;
+        document.getElementById("confirmCPF").textContent = clienteInfo.cpf;
+        document.getElementById("confirmTelefone").textContent = clienteInfo.telefone;
+        changeStep('step4', 'step5');
+      });
 
-    // Evento do botão "Próximo" no passo 3
-    document.getElementById("btnNextStep3").addEventListener("click", async () => {
-      const nome = document.getElementById("nomeCliente").value;
-      const cpf = document.getElementById("cpfCliente").value;
-      const telefone = document.getElementById("telefoneCliente").value;
+      document.getElementById("btnBackStep3").addEventListener("click", () => {
+        changeStep('step3', 'step2');
+      });
 
-      if (!nome || !cpf || !telefone) {
-        Swal.fire({
-          title: 'Erro',
-          text: 'Preencha todos os campos do cliente.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-        return;
-      }
+      document.getElementById("btnBackStep4").addEventListener("click", () => {
+        changeStep('step4', 'step3');
+      });
 
-      // Salva as informações do cliente
-      clienteInfo = { nome, cpf, telefone };
+      document.getElementById("btnBackStep5").addEventListener("click", () => {
+        changeStep('step5', 'step4');
+      });
 
-      // Verifica se o CPF já existe e exibe a mensagem de boas-vindas, se necessário
-      const clienteExistenteId = await verificarCPFExistente(cpf, idLoja);
-      if (clienteExistenteId) {
-        await Swal.fire({
-          title: 'Bem-vindo de volta!',
-          text: 'Você já é um cliente cadastrado.',
-          icon: 'info',
-          confirmButtonText: 'OK'
-        });
-      }
+      document.getElementById("btnConfirmarAgendamento").addEventListener("click", salvarAgendamento);
 
-      // Salva o cliente (novo ou existente) e armazena o ID
-      const clienteId = await salvarCliente();
-      clienteInfo.id = clienteId; // Armazena o ID do cliente para uso no passo 4
-
-      // Exibe os detalhes do agendamento no passo 4
-      document.getElementById("confirmServico").textContent = servicoSelecionado.nome;
-      document.getElementById("confirmHorario").textContent = `${dataSelecionada} às ${horarioSelecionado.horario}`;
-      document.getElementById("confirmCliente").textContent = clienteInfo.nome;
-      document.getElementById("confirmCPF").textContent = clienteInfo.cpf;
-      document.getElementById("confirmTelefone").textContent = clienteInfo.telefone;
-
-      // Avança para o passo 4
-      changeStep('step3', 'step4');
-    });
-
-    document.getElementById("btnBackStep4").addEventListener("click", () => {
-      changeStep('step4', 'step3');
-    });
-
-    document.getElementById("btnConfirmarAgendamento").addEventListener("click", salvarAgendamento);
-
-    // Carrega os serviços ao carregar a página
-    let querySnapshot; // Variável global para armazenar a lista de serviços
-    document.addEventListener("DOMContentLoaded", async () => {
-      await carregarServicos();
-      querySnapshot = await getDocs(collection(db, "Servicos")); // Carrega os serviços
-    });
-  </script>
+      let querySnapshot;
+      document.addEventListener("DOMContentLoaded", async () => {
+        await carregarServicos();
+        querySnapshot = await getDocs(collection(db, "Servicos"));
+      });
+    </script>
 </body>
 
 </html>
