@@ -23,47 +23,48 @@
         background: linear-gradient(135deg, #0D4376, #0a3357);
         color: #fff;
         text-align: center;
-        padding: 20px 40px;
-        margin-bottom: 40px;
+        padding: 15px 40px;
         display: flex;
         justify-content: space-between;
-    }
-
-    header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    header p {
-        font-size: 1.2rem;
-        opacity: 0.9;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
     .content-logo {
         display: flex;
-        justify-content: center;
         align-items: center;
+        gap: 10px;
+    }
+
+    .content-logo img {
+        width: 50px;
+        height: auto;
+    }
+
+    header h1 {
+        font-size: 2rem;
+        font-weight: 700;
     }
 
     nav ul {
         list-style: none;
-        margin-top: 20px;
+        display: flex;
+        gap: 15px;
     }
 
     nav ul li {
         display: inline;
-        margin: 0 15px;
     }
 
     nav ul li a {
         color: white;
         text-decoration: none;
         font-weight: 600;
-        transition: all 0.3s ease-in-out;
-        border: 2px white solid;
+        transition: 0.3s;
+        border: 2px solid white;
         padding: 10px;
         border-radius: 10px;
+        display: inline-block;
     }
 
     nav ul li a:hover {
@@ -71,17 +72,16 @@
     }
 
     .content-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        text-align: center;
         font-size: 20px;
+        margin: 20px;
     }
 
     .lojas {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-        padding: 40px 20px;
+        gap: 20px;
+        padding: 20px;
         max-width: 1200px;
         margin: auto;
     }
@@ -89,17 +89,15 @@
     .loja-card {
         background: #fff;
         border-radius: 10px;
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
-        overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
         text-align: center;
-        padding: 25px;
-        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        transition: 0.3s;
     }
 
     .loja-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     }
 
     .loja-card img {
@@ -113,77 +111,77 @@
     .loja-card h3 {
         font-size: 1.5rem;
         color: #2c3e50;
-        margin-bottom: 10px;
     }
 
     .loja-card p {
         font-size: 1rem;
         color: #666;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 
     .loja-card a {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #0D4376; /* Substituído */
+        background-color: #0D4376;
         color: white;
         text-decoration: none;
         border-radius: 5px;
-        transition: background 0.3s;
+        transition: 0.3s;
         width: 95%;
-        border: 2px #0D4376 solid; /* Substituído */
+        border: 2px solid #0D4376;
     }
 
     .loja-card a:hover {
         background-color: transparent;
-        color: #0D4376; /* Substituído */
-        border: 2px #0D4376 solid; /* Substituído */
+        color: #0D4376;
     }
 
     @media screen and (max-width: 768px) {
         header {
-            padding: 15px 20px;
             flex-direction: column;
-            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content-logo {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .content-logo img {
+            width: 40px;
         }
 
         header h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            font-size: 1rem;
-        }
-
-        .content-header {
-            flex-direction: column;
-            text-align: center;
-            font-size: 16px;
+            font-size: 1.8rem;
         }
 
         nav ul {
-            margin-top: 10px;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 10px;
         }
 
         nav ul li {
             display: block;
-            margin: 10px 0;
         }
 
         nav ul li a {
             padding: 8px 15px;
             font-size: 0.9rem;
         }
+
+        .content-header {
+            font-size: 18px;
+        }
     }
   </style>
 </head>
 <body>
   <header>
-        <div class="content-logo">
-            <img src="../assets/allen-bot-beauty.png" alt="logo-allen-beauty">
-            <h1>Allen Beauty</h1>
-        </div>
+    <div class="content-logo">
+        <img src="../assets/allen-bot-beauty.png" alt="logo-allen-beauty">
+        <h1>Allen Beauty</h1>
     </div>
     <nav>
       <ul>
@@ -192,11 +190,14 @@
     </nav>
   </header>
 
-    <article class="content-header">
+  <article class="content-header">
       <h2>Agende seu horário!</h2>
-    </article>
+  </article>
 
   <section class="lojas"></section>
+
+
+
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
