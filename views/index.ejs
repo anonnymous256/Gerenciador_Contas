@@ -201,7 +201,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, getDoc,where,query} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
@@ -217,22 +217,33 @@
     const db = getFirestore(app);
 
     async function loadClientes() {
-      const lojasContainer = document.querySelector(".lojas");
-      const querySnapshot = await getDocs(collection(db, "users"));
-      lojasContainer.innerHTML = "";
-      querySnapshot.forEach(doc => {
-        const cliente = doc.data();
-        const imgSrc = cliente.imagem ? `data:image/png;base64,${cliente.imagem}` : 'https://via.placeholder.com/100';
-        const lojaCard = document.createElement("div");
-        lojaCard.classList.add("loja-card");
-        lojaCard.innerHTML = `
-          <img src="${imgSrc}" alt="${cliente.name}">
-          <h3>${cliente.name || "Nome não informado"}</h3>
-          <a href="/agendamento?id=${doc.id}&nome=${cliente.name || "Nome não informado"}">Agendar</a>
-        `;
-        lojasContainer.appendChild(lojaCard);
-      });
+    const lojasContainer = document.querySelector(".lojas");
+
+    try {
+        const q = query(collection(db, "users"), where("status", "==", "ativado"));
+        const querySnapshot = await getDocs(q);
+
+        lojasContainer.innerHTML = "";
+
+        querySnapshot.forEach(doc => {
+            const cliente = doc.data();
+            const imgSrc = cliente.imagem ? `data:image/png;base64,${cliente.imagem}` : 'https://via.placeholder.com/100';
+            
+            const lojaCard = document.createElement("div");
+            lojaCard.classList.add("loja-card");
+            lojaCard.innerHTML = `
+                <img src="${imgSrc}" alt="${cliente.name}">
+                <h3>${cliente.name || "Nome não informado"}</h3>
+                <a href="/agendamento?id=${doc.id}&nome=${encodeURIComponent(cliente.name || "Nome não informado")}">Agendar</a>
+            `;
+
+            lojasContainer.appendChild(lojaCard);
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar clientes:", error);
     }
+}
 
     document.addEventListener("DOMContentLoaded", loadClientes);
   </script>
