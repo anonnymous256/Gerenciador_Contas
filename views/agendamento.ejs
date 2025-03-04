@@ -11,63 +11,63 @@
 
   <style>
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-        font-family: 'Poppins', sans-serif;
-        line-height: 1.6;
-        background-color: #f9fafb;
-        background-image: url("../assets/wallpaper-white.webp");
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      background-color: #f9fafb;
+      background-image: url("../assets/wallpaper-white.webp");
     }
 
     header {
-        background: linear-gradient(135deg, #0D4376, #0a3357);
-        color: #fff;
-        text-align: center;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      background: linear-gradient(135deg, #0D4376, #0a3357);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: 700;
     }
 
     main {
-        color: #333;
-        line-height: 1.6;
-        flex-direction: column;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 80vh;
-        margin: 0; 
-        padding: 0; 
-    } 
+      color: #333;
+      line-height: 1.6;
+      flex-direction: column;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      margin: 0;
+      padding: 0;
+    }
 
     .agendamento-container {
-        text-align: center;
-        background-color: #fff;
-        padding: 0px 40px 40px 40px;
-        border-radius: 10px;
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
-        max-width: 500px;
-        width: 100%;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        border-top-right-radius: 0px;
-        border-top-left-radius: 0px;
-        border-top: 0;
+      text-align: center;
+      background-color: #fff;
+      padding: 0px 40px 40px 40px;
+      border-radius: 10px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+      max-width: 500px;
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-top-right-radius: 0px;
+      border-top-left-radius: 0px;
+      border-top: 0;
     }
 
     .content-detalhes {
       text-align: center;
       background-color: #fff;
-      padding:10px 10px 10px 10px;
+      padding: 10px 10px 10px 10px;
       border-radius: 10px;
       box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
       max-width: 500px;
@@ -85,194 +85,203 @@
     }
 
     .agendamento-container h2 {
-        font-size: 1.7rem;
-        color: #0D4376;
-        margin-bottom: 20px;
-        font-weight: 700;
-        padding: 0;
+      font-size: 1.7rem;
+      color: #0D4376;
+      margin-bottom: 20px;
+      font-weight: 700;
+      padding: 0;
     }
 
     .agendamento-container p {
-        font-size: 1rem;
-        color: #666;
-        margin-bottom: 30px;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 30px;
     }
 
     .step {
-        display: none;
+      display: none;
     }
 
     .icon {
-  width: 20px; 
-  height: 20px; 
-  vertical-align: middle; 
-  margin-right: 5px; 
-}
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
 
     .step.active {
-        display: block;
+      display: block;
     }
 
     select,
     .flatpickr-input,
     input {
-        width: 100%;
-        padding: 12px;
-        font-size: 1rem;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        border-radius: 10px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        outline: none;
-        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      outline: none;
+      transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 
     select:focus,
     .flatpickr-input:focus,
     input:focus {
-        border-color: #0D4376; /* Substituído */
-        box-shadow: 0 0 5px rgba(13, 67, 118, 0.5); /* Substituído */
+      border-color: #0D4376;
+      /* Substituído */
+      box-shadow: 0 0 5px rgba(13, 67, 118, 0.5);
+      /* Substituído */
     }
 
     .btn {
-        padding: 12px 20px;
-        background-color: #0D4376; /* Substituído */
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 10px;
-        font-size: 1rem;
-        width: 100%;
-        transition: background 0.3s;
-        border: 2px #0D4376 solid; /* Substituído */
+      padding: 12px 20px;
+      background-color: #0D4376;
+      /* Substituído */
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 1rem;
+      width: 100%;
+      transition: background 0.3s;
+      border: 2px #0D4376 solid;
+      /* Substituído */
     }
 
     .btn:hover {
-        background-color: transparent;
-        color: #0D4376; /* Substituído */
-        border: 2px #0D4376 solid; /* Substituído */
+      background-color: transparent;
+      color: #0D4376;
+      /* Substituído */
+      border: 2px #0D4376 solid;
+      /* Substituído */
     }
 
     .btn-secondary {
-        background-color: #6c757d;
-        border: 2px #6c757d solid;
+      background-color: #6c757d;
+      border: 2px #6c757d solid;
     }
 
     .btn-secondary:hover {
-        background-color: transparent;
-        color: #5a6268;
-        border: 2px #5a6268 solid;
+      background-color: transparent;
+      color: #5a6268;
+      border: 2px #5a6268 solid;
     }
 
     .horarios-container {
-        margin-top: 0px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+      margin-top: 0px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .horarios-container h3 {
-        font-size: 1.2rem;
-        color: #2c3e50;
-        margin: 0;
-        width: 100%;
+      font-size: 1.2rem;
+      color: #2c3e50;
+      margin: 0;
+      width: 100%;
     }
 
     .horarios-container button {
-        padding: 10px 15px;
-        background-color: #f0f0f0;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      padding: 10px 15px;
+      background-color: #f0f0f0;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     }
 
     .horarios-container button:hover {
-        background-color: #e0e0e0;
+      background-color: #e0e0e0;
     }
 
     .horarios-container button.selected {
-        background-color: #0D4376; /* Substituído */
-        color: #fff;
-        border-color: #0D4376; /* Substituído */
+      background-color: #0D4376;
+      /* Substituído */
+      color: #fff;
+      border-color: #0D4376;
+      /* Substituído */
     }
 
     .confirmation-details {
-        text-align: left;
-        margin-top: 15px;
-        padding: 5px 20px 5px 20px;
-        background-color: #f9f9f9;
-        border-radius: 10px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: left;
+      margin-top: 15px;
+      padding: 5px 20px 5px 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .confirmation-details p {
-        margin: 10px 0;
-        font-size: 1rem;
-        color: #333;
+      margin: 10px 0;
+      font-size: 1rem;
+      color: #333;
     }
 
     .confirmation-details strong {
-        color: #0D4376; /* Substituído */
+      color: #0D4376;
+      /* Substituído */
     }
 
-    
+
 
     @media screen and (max-width: 768px) {
-        header {
-          padding: 20px;
-          margin: 0;
-        }
+      header {
+        padding: 20px;
+        margin: 0;
+      }
 
-        header h1 {
-          font-size: 18px;
-        }
+      header h1 {
+        font-size: 18px;
+      }
 
-        main {
-            padding: 20px;
-            height: 80vh;
-        }
+      main {
+        padding: 20px;
+        height: 80vh;
+      }
 
-        .agendamento-container {
-            padding: 0px 20px 20px 20px;
-        }
+      .agendamento-container {
+        padding: 0px 20px 20px 20px;
+      }
 
-        .content-detalhes {
-          padding: 12px 5px 12px 5px;
-        }
+      .content-detalhes {
+        padding: 12px 5px 12px 5px;
+      }
 
-        .content-detalhes h2 {
-            font-size: 1.3rem;
-        }
+      .content-detalhes h2 {
+        font-size: 1.3rem;
+      }
 
-        .agendamento-container p {
-            font-size: 0.9rem;
-        }
+      .agendamento-container p {
+        font-size: 0.9rem;
+      }
 
-        .agendamento-container h3 {
-          font-size: 18px;
-        }
+      .agendamento-container h3 {
+        font-size: 18px;
+      }
 
-        .btn {
-            padding: 10px 15px;
-            font-size: 0.9rem;
-        }
+      .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
 
-        .horarios-container button {
-            padding: 8px 12px;
-            font-size: 0.9rem;
-        }
+      .horarios-container button {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 
 <body>
-    <header>
-      <h1><img src="" alt="logo"><span id="nomeLoja"></span></h1>
-    </header>
+  <header>
+    <h1><img src="" alt="logo"><span id="nomeLoja"></span></h1>
+  </header>
 
-<main>
+  <main>
 
     <div class="content-detalhes">
       <h2>Detalhes do Agendamento</h2>
@@ -288,443 +297,471 @@
         <button class="btn" id="btnNextStep1">Próximo</button>
       </div>
 
-    <!-- Passo 2: Seleção de Horário -->
-    <div class="step" id="step2">
-      <h3>Selecione uma Data</h3>
-      <input type="text" id="dataAgendamento" placeholder="dd/mm/aaaa" required>
-      <div class="horarios-container" id="horariosContainer">
+      <!-- Passo 2: Seleção de Horário -->
+      <div class="step" id="step2">
+        <h3>Selecione uma Data</h3>
+        <input type="text" id="dataAgendamento" placeholder="dd/mm/aaaa" required>
+        <div class="horarios-container" id="horariosContainer">
+        </div>
+        <button class="btn" id="btnNextStep2">Próximo</button>
+        <button class="btn btn-secondary" id="btnBackStep2">Voltar</button>
       </div>
-      <button class="btn" id="btnNextStep2">Próximo</button>
-      <button class="btn btn-secondary" id="btnBackStep2">Voltar</button>
-    </div>
 
-    <!-- Passo 3: Verificação do CPF -->
-    <div class="step" id="step3">
-      <h3>Verificação do CPF</h3>
-      <input type="text" id="cpfCliente" placeholder="Digite seu CPF" required>
-      <button class="btn" id="btnVerificarCPF">Verificar</button>
-      <button class="btn btn-secondary" id="btnBackStep3">Voltar</button>
-    </div>
-
-    <!-- Passo 4: Informações do Cliente (se CPF não existir) -->
-    <div class="step" id="step4">
-      <h3>Informações</h3>
-      <input type="text" id="nomeCliente" placeholder="Seu Nome" required>
-      <input type="text" id="telefoneCliente" placeholder="Telefone" required>
-      <button class="btn" id="btnNextStep4">Próximo</button>
-      <button class="btn btn-secondary" id="btnBackStep4">Voltar</button>
-    </div>
-
-    <!-- Passo 5: Confirmação do Agendamento -->
-    <div class="step" id="step5">
-      <h3>Confirme seu Agendamento</h3>
-      <div class="confirmation-details">
-        <p><strong><img src="../assets/icon-servico.png" class="icon">Serviço:</strong> <span id="confirmServico"></span></p>
-        <p><strong><img src="../assets/icon-hora.png" class="icon">Horário:</strong> <span id="confirmHorario"></span></p>
-        <p><strong><img src="../assets/icon-cliente.png" class="icon">Cliente:</strong> <span id="confirmCliente"></span></p>
-        <p><strong><img src="../assets/icon-cpf.png" class="icon">CPF:</strong> <span id="confirmCPF"></span></p>
-        <p><strong><img src="../assets/icon-telefone.png" class="icon">Telefone:</strong> <span id="confirmTelefone"></span></p>
+      <!-- Passo 3: Verificação do CPF -->
+      <div class="step" id="step3">
+        <h3>Verificação do CPF</h3>
+        <input type="text" id="cpfCliente" placeholder="Digite seu CPF" required>
+        <button class="btn" id="btnVerificarCPF">Verificar</button>
+        <button class="btn btn-secondary" id="btnBackStep3">Voltar</button>
       </div>
-      <button class="btn" id="btnConfirmarAgendamento">Confirmar</button>
-      <button class="btn btn-secondary" id="btnBackStep5">Voltar</button>
-    </div>
+
+      <!-- Passo 4: Informações do Cliente (se CPF não existir) -->
+      <div class="step" id="step4">
+        <h3>Informações</h3>
+        <input type="text" id="nomeCliente" placeholder="Seu Nome" required>
+        <input type="text" id="telefoneCliente" placeholder="Telefone" required>
+        <button class="btn" id="btnNextStep4">Próximo</button>
+        <button class="btn btn-secondary" id="btnBackStep4">Voltar</button>
+      </div>
+
+      <!-- Passo 5: Confirmação do Agendamento -->
+      <div class="step" id="step5">
+        <h3>Confirme seu Agendamento</h3>
+        <div class="confirmation-details">
+          <p><strong><img src="../assets/icon-servico.png" class="icon">Serviço:</strong> <span
+              id="confirmServico"></span></p>
+          <p><strong><img src="../assets/icon-hora.png" class="icon">Horário:</strong> <span id="confirmHorario"></span>
+          </p>
+          <p><strong><img src="../assets/icon-cliente.png" class="icon">Cliente:</strong> <span
+              id="confirmCliente"></span></p>
+          <p><strong><img src="../assets/icon-cpf.png" class="icon">CPF:</strong> <span id="confirmCPF"></span></p>
+          <p><strong><img src="../assets/icon-telefone.png" class="icon">Telefone:</strong> <span
+              id="confirmTelefone"></span></p>
+        </div>
+        <button class="btn" id="btnConfirmarAgendamento">Confirmar</button>
+        <button class="btn btn-secondary" id="btnBackStep5">Voltar</button>
+      </div>
 
   </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-      import { getFirestore, collection, getDocs, getDoc, doc, addDoc, setDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, getDoc, doc, addDoc, setDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
-        authDomain: "allenbeauty.firebaseapp.com",
-        projectId: "allenbeauty",
-        storageBucket: "allenbeauty.appspot.com",
-        messagingSenderId: "347722299020",
-        appId: "1:347722299020:web:1e946417d954bebe5d6da9",
-        measurementId: "G-CWM27YKX8C"
-      };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCGf-lc7B3bWjUa1rXmYHXLMK5z-eKrNCU",
+      authDomain: "allenbeauty.firebaseapp.com",
+      projectId: "allenbeauty",
+      storageBucket: "allenbeauty.appspot.com",
+      messagingSenderId: "347722299020",
+      appId: "1:347722299020:web:1e946417d954bebe5d6da9",
+      measurementId: "G-CWM27YKX8C"
+    };
 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const idLoja = urlParams.get('id');
-      const nomeLoja = urlParams.get('nome');
+    const urlParams = new URLSearchParams(window.location.search);
+    const idLoja = urlParams.get('id');
+    const nomeLoja = urlParams.get('nome');
 
-      document.getElementById('nomeLoja').textContent = nomeLoja || "Nome não informado";
+    document.getElementById('nomeLoja').textContent = nomeLoja || "Nome não informado";
 
-      const userId = "SqeUi9WyNvZJ3mi9m14cdrQnA5u1";
+    const userId = "SqeUi9WyNvZJ3mi9m14cdrQnA5u1";
 
-      let servicoSelecionado = null;
-      let horarioSelecionado = null;
-      let clienteInfo = { nome: '', cpf: '', telefone: '' };
-      let dataSelecionada = null;
+    let servicoSelecionado = null;
+    let horarioSelecionado = null;
+    let clienteInfo = { nome: '', cpf: '', telefone: '' };
+    let dataSelecionada = null;
 
-      // Função para mudar de passo
-      function changeStep(currentStep, nextStep) {
-        document.getElementById(currentStep).classList.remove('active');
-        document.getElementById(nextStep).classList.add('active');
-      }
-
-      // Máscara para CPF
-      document.getElementById("cpfCliente").addEventListener("input", function (e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 11) value = value.slice(0, 11);
-        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-        e.target.value = value;
-      });
-
-      // Máscara para telefone
-      document.getElementById("telefoneCliente").addEventListener("input", function (e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 11) value = value.slice(0, 11);
-        value = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
-        e.target.value = value;
-      });
-
-      flatpickr("#dataAgendamento", {
-  dateFormat: "d/m/Y",
-  minDate: "today",
-  locale: "pt",
-  onChange: async function (selectedDates) {
-    if (selectedDates.length === 0) return;
-
-    // Atualiza a data selecionada
-    dataSelecionada = selectedDates[0];
-
-    const diasSemana = [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado"
-    ];
-
-    const diaSemanaSelecionado = diasSemana[dataSelecionada.getDay()];
-
-    // Chama a função para filtrar os horários
-    await filtrarHorariosPorDia(diaSemanaSelecionado);
-  }
-});
-
-      async function carregarServicos() {
-        const servicosRef = collection(db, "Servicos");
-        const querySnapshot = await getDocs(servicosRef);
-        const servicosSelect = document.getElementById("servicos");
-
-        querySnapshot.forEach(doc => {
-          const servico = doc.data();
-          if (servico.usuarioId === idLoja && servico.tipo === "Serviço") {
-            const option = document.createElement("option");
-            option.value = doc.id;
-            option.textContent = servico.nome;
-            servicosSelect.appendChild(option);
-          }
-        });
-      }
-
-      async function filtrarHorariosPorDia(diaSelecionado) {
-  const horariosContainer = document.getElementById("horariosContainer");
-  horariosContainer.innerHTML = "<h3>Horários Disponíveis</h3>";
-
-  if (!servicoSelecionado) {
-    console.error("Nenhum serviço selecionado.");
-    return;
-  }
-
-  // Busca os horários do serviço selecionado
-  const servicoDoc = querySnapshot.docs.find(doc => doc.id === servicoSelecionado.id);
-  if (!servicoDoc) {
-    console.error("Serviço não encontrado.");
-    return;
-  }
-
-  const horarios = servicoDoc.data().horarios;
-  if (!horarios[diaSelecionado] || horarios[diaSelecionado].length === 0) {
-    horariosContainer.innerHTML += "<p>Nenhum horário disponível para este dia.</p>";
-    return;
-  }
-
-  // Itera sobre os horários e verifica a disponibilidade
-  for (const horario of horarios[diaSelecionado]) {
-    const botaoHorario = document.createElement("button");
-    botaoHorario.textContent = horario;
-
-    try {
-      // Verifica a disponibilidade do horário
-      const disponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horario);
-
-      if (!disponivel) {
-        botaoHorario.disabled = true;
-        botaoHorario.style.backgroundColor = "#ccc";
-        botaoHorario.style.cursor = "not-allowed";
-        botaoHorario.textContent += " (Indisponível)";
-      } else {
-        botaoHorario.addEventListener("click", () => {
-          document.querySelectorAll('.horarios-container button').forEach(btn => btn.classList.remove('selected'));
-          botaoHorario.classList.add('selected');
-          horarioSelecionado = { dia: diaSelecionado, horario };
-        });
-      }
-    } catch (erro) {
-      console.error(`Erro ao verificar disponibilidade para ${horario}:`, erro);
-      botaoHorario.disabled = true;
-      botaoHorario.textContent += " (Erro)";
+    // Função para mudar de passo
+    function changeStep(currentStep, nextStep) {
+      document.getElementById(currentStep).classList.remove('active');
+      document.getElementById(nextStep).classList.add('active');
     }
 
-    horariosContainer.appendChild(botaoHorario);
+    // Máscara para CPF
+    document.getElementById("cpfCliente").addEventListener("input", function (e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 11) value = value.slice(0, 11);
+      value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+      e.target.value = value;
+    });
+
+    // Máscara para telefone
+    document.getElementById("telefoneCliente").addEventListener("input", function (e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 11) value = value.slice(0, 11);
+      value = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+      e.target.value = value;
+    });
+
+    flatpickr("#dataAgendamento", {
+      dateFormat: "d/m/Y",
+      minDate: "today",
+      locale: "pt",
+      onChange: async function (selectedDates) {
+        if (selectedDates.length === 0) return;
+
+        // Atualiza a data selecionada
+        dataSelecionada = selectedDates[0];
+
+        const diasSemana = [
+          "Domingo",
+          "Segunda-feira",
+          "Terça-feira",
+          "Quarta-feira",
+          "Quinta-feira",
+          "Sexta-feira",
+          "Sábado"
+        ];
+
+        const diaSemanaSelecionado = diasSemana[dataSelecionada.getDay()];
+
+        // Chama a função para filtrar os horários
+        await filtrarHorariosPorDia(diaSemanaSelecionado);
+      }
+    });
+
+    async function carregarServicos() {
+      const servicosRef = collection(db, "Servicos");
+      const querySnapshot = await getDocs(servicosRef);
+      const servicosSelect = document.getElementById("servicos");
+
+      querySnapshot.forEach(doc => {
+        const servico = doc.data();
+        if (servico.usuarioId === idLoja && servico.tipo === "Serviço") {
+          const option = document.createElement("option");
+          option.value = doc.id;
+          option.textContent = servico.nome;
+          servicosSelect.appendChild(option);
+        }
+      });
+    }
+
+    async function filtrarHorariosPorDia(diaSelecionado) {
+      const horariosContainer = document.getElementById("horariosContainer");
+      horariosContainer.innerHTML = "<h3>Horários Disponíveis</h3>";
+
+      if (!servicoSelecionado) {
+        console.error("Nenhum serviço selecionado.");
+        return;
+      }
+
+      // Busca os horários do serviço selecionado
+      const servicoDoc = querySnapshot.docs.find(doc => doc.id === servicoSelecionado.id);
+      if (!servicoDoc) {
+        console.error("Serviço não encontrado.");
+        return;
+      }
+
+      const horarios = servicoDoc.data().horarios;
+      if (!horarios[diaSelecionado] || horarios[diaSelecionado].length === 0) {
+        horariosContainer.innerHTML += "<p>Nenhum horário disponível para este dia.</p>";
+        return;
+      }
+
+      // Itera sobre os horários e verifica a disponibilidade
+      for (const horario of horarios[diaSelecionado]) {
+        const botaoHorario = document.createElement("button");
+        botaoHorario.textContent = horario;
+
+        try {
+          // Verifica a disponibilidade do horário
+          const disponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horario);
+
+          if (!disponivel) {
+            botaoHorario.disabled = true;
+            botaoHorario.style.backgroundColor = "#ccc";
+            botaoHorario.style.cursor = "not-allowed";
+            botaoHorario.textContent += " (Indisponível)";
+          } else {
+            botaoHorario.addEventListener("click", () => {
+              document.querySelectorAll('.horarios-container button').forEach(btn => btn.classList.remove('selected'));
+              botaoHorario.classList.add('selected');
+              horarioSelecionado = { dia: diaSelecionado, horario };
+            });
+          }
+        } catch (erro) {
+          console.error(`Erro ao verificar disponibilidade para ${horario}:`, erro);
+          botaoHorario.disabled = true;
+          botaoHorario.textContent += " (Erro)";
+        }
+
+        horariosContainer.appendChild(botaoHorario);
+      }
+    }
+
+    async function verificarDisponibilidade(servicoId, data, horario) {
+      // Busca o documento do serviço no banco de dados
+      const servicoDoc = await getDoc(doc(db, "Servicos", servicoId));
+      if (!servicoDoc.exists()) {
+        throw new Error("Serviço não encontrado.");
+      }
+
+      // Obtém os dados do serviço
+      const servico = servicoDoc.data();
+      const funcionarios = servico.funcionarios; // Lista de funcionários disponíveis
+
+      // Consulta os agendamentos para o serviço, data e horário selecionados
+      const agendamentosRef = collection(db, "agendamentos");
+      const q = query(
+        agendamentosRef,
+        where("idLoja", "==", idLoja),
+        where("dataSelecionada", "==", data),
+        where("horario", "==", horario),
+        where("status", "==", "pendente")
+      );
+      const querySnapshot = await getDocs(q);
+
+      // Lista de funcionários já alocados para o horário
+      const funcionariosAlocados = querySnapshot.docs.map(doc => doc.data().funcionarioAlocado);
+
+      // Encontra um funcionário disponível
+      const funcionarioDisponivel = funcionarios.find(funcionario => !funcionariosAlocados.includes(funcionario));
+
+      // Retorna o funcionário disponível (ou null se não houver)
+      return funcionarioDisponivel || null;
+    }
+
+    async function verificarCPFExistente(cpf, idLoja) {
+      const clientesRef = collection(db, "clientes");
+      const q = query(clientesRef, where("cpf", "==", cpf), where("idUser", "==", idLoja));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const cliente = querySnapshot.docs[0].data();
+        return {
+          id: querySnapshot.docs[0].id,
+          nome: cliente.nome,
+          telefone: cliente.telefone
+        };
+      }
+      return null;
+    }
+
+    async function selecionarHorario(horario) {
+  const funcionarioDisponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horario);
+
+  if (funcionarioDisponivel) {
+    horarioSelecionado = {
+      horario: horario,
+      funcionario: funcionarioDisponivel // Armazena o funcionário escolhido
+    };
+    console.log(`Horário ${horario} selecionado com o funcionário ${funcionarioDisponivel}`);
+  } else {
+    console.log(`Nenhum funcionário disponível para o horário ${horario}`);
+    // Desabilitar o botão ou mostrar uma mensagem de indisponibilidade
   }
 }
 
-      async function verificarDisponibilidade(servicoId, data, horario) {
-        const servicoDoc = await getDoc(doc(db, "Servicos", servicoId));
-        if (!servicoDoc.exists()) {
-          throw new Error("Serviço não encontrado.");
-        }
+    async function salvarCliente() {
+      const cpf = clienteInfo.cpf;
+      const clienteExistenteId = await verificarCPFExistente(cpf, idLoja);
+      if (clienteExistenteId) {
+        return clienteExistenteId;
+      }
+      const clienteRef = collection(db, "clientes");
+      const docRef = doc(clienteRef);
+      const idDoc = docRef.id;
 
-        const servico = servicoDoc.data();
-        const numFuncionarios = servico.funcionarios.length;
+      const clienteData = {
+        cpf: cpf,
+        dataCadastro: serverTimestamp(),
+        idDoc: idDoc,
+        idUser: idLoja,
+        imagem: null,
+        nome: clienteInfo.nome,
+        status: "ativo",
+        telefone: clienteInfo.telefone
+      };
+      await setDoc(docRef, clienteData);
+      return idDoc;
+    }
 
-        const agendamentosRef = collection(db, "agendamentos");
-        const q = query(
-          agendamentosRef,
-          where("idLoja", "==", idLoja),
-          where("servico", "==", servicoId),
-          where("dataSelecionada", "==", data),
-          where("status", "==", "pendente"),
-          where("horario", "==", horario)
-        );
-        const querySnapshot = await getDocs(q);
-        const numAgendamentos = querySnapshot.size;
-        if (numFuncionarios > 1) {
-          return numAgendamentos < numFuncionarios;
-        } else {
-          return numAgendamentos === 0;
-        }
+    async function salvarAgendamento() {
+  try {
+    const funcionarioDisponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horarioSelecionado.horario);
+
+    if (!funcionarioDisponivel) {
+      Swal.fire({
+        title: 'Indisponível',
+        text: 'Não há funcionários disponíveis para este horário.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    await addDoc(collection(db, "agendamentos"), {
+      idLoja: idLoja,
+      idUsuario: userId,
+      idCliente: clienteInfo.id,
+      servico: servicoSelecionado.id,
+      dataSelecionada: dataSelecionada,
+      horario: horarioSelecionado.horario,
+      funcionarioAlocado: funcionarioDisponivel, // Funcionário alocado
+      imagem: null,
+      status: "pendente"
+    });
+
+    Swal.fire({
+      title: 'Sucesso',
+      text: 'Agendamento salvo com sucesso!',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      window.location.reload();
+    });
+  } catch (error) {
+    console.error("Erro ao salvar agendamento:", error);
+    Swal.fire({
+      title: 'Erro',
+      text: 'Erro ao salvar agendamento. Tente novamente.',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  }
+}
+
+    document.getElementById("btnNextStep1").addEventListener("click", () => {
+      const servicoId = document.getElementById("servicos").value;
+      if (!servicoId) {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Selecione um serviço para continuar.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
+      }
+      servicoSelecionado = {
+        id: servicoId,
+        nome: document.getElementById("servicos").selectedOptions[0].text
+      };
+
+      changeStep('step1', 'step2');
+    });
+
+    document.getElementById("btnBackStep2").addEventListener("click", () => {
+      changeStep('step2', 'step1');
+    });
+
+    document.getElementById("btnNextStep2").addEventListener("click", () => {
+      dataSelecionada = document.getElementById("dataAgendamento").value;
+
+      if (!dataSelecionada) {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Selecione uma data para continuar.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
       }
 
-      async function verificarCPFExistente(cpf, idLoja) {
-        const clientesRef = collection(db, "clientes");
-        const q = query(clientesRef, where("cpf", "==", cpf), where("idUser", "==", idLoja));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-          const cliente = querySnapshot.docs[0].data();
-          return {
-            id: querySnapshot.docs[0].id,
-            nome: cliente.nome,
-            telefone: cliente.telefone
-          };
-        }
-        return null;
+      if (!horarioSelecionado) {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Selecione um horário para continuar.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
       }
-      async function salvarCliente() {
-        const cpf = clienteInfo.cpf;
-        const clienteExistenteId = await verificarCPFExistente(cpf, idLoja);
-        if (clienteExistenteId) {
-          return clienteExistenteId;
-        }
-        const clienteRef = collection(db, "clientes");
-        const docRef = doc(clienteRef);
-        const idDoc = docRef.id;
 
-        const clienteData = {
+      changeStep('step2', 'step3');
+    });
+
+    document.getElementById("btnVerificarCPF").addEventListener("click", async () => {
+      const cpf = document.getElementById("cpfCliente").value.replace(/\D/g, '');
+      if (!cpf || cpf.length !== 11) {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Por favor, insira um CPF válido.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
+      }
+
+      const clienteExistente = await verificarCPFExistente(cpf, idLoja);
+      if (clienteExistente) {
+        await Swal.fire({
+          title: 'Bem-vindo de volta!',
+          text: 'Você já é um cliente cadastrado.',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        });
+
+        clienteInfo = {
+          id: clienteExistente.id,
           cpf: cpf,
-          dataCadastro: serverTimestamp(),
-          idDoc: idDoc,
-          idUser: idLoja,
-          imagem: null,
-          nome: clienteInfo.nome,
-          status: "ativo",
-          telefone: clienteInfo.telefone
-        };
-        await setDoc(docRef, clienteData);
-        return idDoc;
-      }
-
-      async function salvarAgendamento() {
-        try {
-          const disponivel = await verificarDisponibilidade(servicoSelecionado.id, dataSelecionada, horarioSelecionado.horario);
-          if (!disponivel) {
-            Swal.fire({
-              title: 'Indisponível',
-              text: 'Não há funcionários disponíveis para este horário.',
-              icon: 'warning',
-              confirmButtonText: 'OK'
-            });
-            return;
-          }
-          await addDoc(collection(db, "agendamentos"), {
-            idLoja: idLoja,
-            idUsuario: userId,
-            idCliente: clienteInfo.id,
-            servico: servicoSelecionado.id,
-            dataSelecionada: dataSelecionada,
-            horario: horarioSelecionado.horario,
-            imagem: null,
-            status: "pendente"
-          });
-
-          Swal.fire({
-            title: 'Sucesso',
-            text: 'Agendamento salvo com sucesso!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          }).then(() => {
-            window.location.reload();
-          });
-        } catch (error) {
-          console.error("Erro ao salvar agendamento:", error);
-          Swal.fire({
-            title: 'Erro',
-            text: 'Erro ao salvar agendamento. Tente novamente.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-        }
-      }
-
-      document.getElementById("btnNextStep1").addEventListener("click", () => {
-        const servicoId = document.getElementById("servicos").value;
-        if (!servicoId) {
-          Swal.fire({
-            title: 'Erro',
-            text: 'Selecione um serviço para continuar.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          return;
-        }
-        servicoSelecionado = {
-          id: servicoId,
-          nome: document.getElementById("servicos").selectedOptions[0].text
+          nome: clienteExistente.nome,
+          telefone: clienteExistente.telefone
         };
 
-        changeStep('step1', 'step2');
-      });
-
-      document.getElementById("btnBackStep2").addEventListener("click", () => {
-        changeStep('step2', 'step1');
-      });
-
-      document.getElementById("btnNextStep2").addEventListener("click", () => {
-        dataSelecionada = document.getElementById("dataAgendamento").value;
-
-        if (!dataSelecionada) {
-          Swal.fire({
-            title: 'Erro',
-            text: 'Selecione uma data para continuar.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          return;
-        }
-
-        if (!horarioSelecionado) {
-          Swal.fire({
-            title: 'Erro',
-            text: 'Selecione um horário para continuar.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          return;
-        }
-
-        changeStep('step2', 'step3');
-      });
-
-      document.getElementById("btnVerificarCPF").addEventListener("click", async () => {
-        const cpf = document.getElementById("cpfCliente").value.replace(/\D/g, '');
-        if (!cpf || cpf.length !== 11) {
-          Swal.fire({
-            title: 'Erro',
-            text: 'Por favor, insira um CPF válido.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          return;
-        }
-
-        const clienteExistente = await verificarCPFExistente(cpf, idLoja);
-        if (clienteExistente) {
-          await Swal.fire({
-            title: 'Bem-vindo de volta!',
-            text: 'Você já é um cliente cadastrado.',
-            icon: 'info',
-            confirmButtonText: 'OK'
-          });
-
-          clienteInfo = {
-            id: clienteExistente.id,
-            cpf: cpf,
-            nome: clienteExistente.nome,
-            telefone: clienteExistente.telefone
-          };
-
-          document.getElementById("confirmServico").textContent = servicoSelecionado.nome;
-          document.getElementById("confirmHorario").textContent = `${dataSelecionada} às ${horarioSelecionado.horario}`;
-          document.getElementById("confirmCliente").textContent = clienteInfo.nome;
-          document.getElementById("confirmCPF").textContent = clienteInfo.cpf;
-          document.getElementById("confirmTelefone").textContent = clienteInfo.telefone;
-
-          changeStep('step3', 'step5');
-        } else {
-          clienteInfo.cpf = cpf;
-          changeStep('step3', 'step4');
-        }
-      });
-
-      document.getElementById("btnNextStep4").addEventListener("click", async () => {
-        const nome = document.getElementById("nomeCliente").value;
-        const telefone = document.getElementById("telefoneCliente").value.replace(/\D/g, '');
-
-        if (!nome || !telefone) {
-          Swal.fire({
-            title: 'Erro',
-            text: 'Preencha todos os campos do cliente.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          return;
-        }
-        clienteInfo = { ...clienteInfo, nome, telefone };
-        const clienteId = await salvarCliente();
-        clienteInfo.id = clienteId;
-
-        // Preenche os dados de confirmação
         document.getElementById("confirmServico").textContent = servicoSelecionado.nome;
         document.getElementById("confirmHorario").textContent = `${dataSelecionada} às ${horarioSelecionado.horario}`;
         document.getElementById("confirmCliente").textContent = clienteInfo.nome;
         document.getElementById("confirmCPF").textContent = clienteInfo.cpf;
         document.getElementById("confirmTelefone").textContent = clienteInfo.telefone;
-        changeStep('step4', 'step5');
-      });
 
-      document.getElementById("btnBackStep3").addEventListener("click", () => {
-        changeStep('step3', 'step2');
-      });
+        changeStep('step3', 'step5');
+      } else {
+        clienteInfo.cpf = cpf;
+        changeStep('step3', 'step4');
+      }
+    });
 
-      document.getElementById("btnBackStep4").addEventListener("click", () => {
-        changeStep('step4', 'step3');
-      });
+    document.getElementById("btnNextStep4").addEventListener("click", async () => {
+      const nome = document.getElementById("nomeCliente").value;
+      const telefone = document.getElementById("telefoneCliente").value.replace(/\D/g, '');
 
-      document.getElementById("btnBackStep5").addEventListener("click", () => {
-        changeStep('step5', 'step4');
-      });
+      if (!nome || !telefone) {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Preencha todos os campos do cliente.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        return;
+      }
+      clienteInfo = { ...clienteInfo, nome, telefone };
+      const clienteId = await salvarCliente();
+      clienteInfo.id = clienteId;
 
-      document.getElementById("btnConfirmarAgendamento").addEventListener("click", salvarAgendamento);
+      // Preenche os dados de confirmação
+      document.getElementById("confirmServico").textContent = servicoSelecionado.nome;
+      document.getElementById("confirmHorario").textContent = `${dataSelecionada} às ${horarioSelecionado.horario}`;
+      document.getElementById("confirmCliente").textContent = clienteInfo.nome;
+      document.getElementById("confirmCPF").textContent = clienteInfo.cpf;
+      document.getElementById("confirmTelefone").textContent = clienteInfo.telefone;
+      changeStep('step4', 'step5');
+    });
 
-      let querySnapshot;
-      document.addEventListener("DOMContentLoaded", async () => {
-        await carregarServicos();
-        querySnapshot = await getDocs(collection(db, "Servicos"));
-      });
+    document.getElementById("btnBackStep3").addEventListener("click", () => {
+      changeStep('step3', 'step2');
+    });
 
-    </script>
+    document.getElementById("btnBackStep4").addEventListener("click", () => {
+      changeStep('step4', 'step3');
+    });
+
+    document.getElementById("btnBackStep5").addEventListener("click", () => {
+      changeStep('step5', 'step4');
+    });
+
+    document.getElementById("btnConfirmarAgendamento").addEventListener("click", salvarAgendamento);
+
+    let querySnapshot;
+    document.addEventListener("DOMContentLoaded", async () => {
+      await carregarServicos();
+      querySnapshot = await getDocs(collection(db, "Servicos"));
+    });
+
+  </script>
 </body>
 
 </html>
